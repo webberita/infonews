@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Detail Berita</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="article-detail"></div>
+  <a href="index.html">Kembali ke Beranda</a>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const id = parseInt(params.get("id"));
+    fetch("data/news.json")
+      .then(res => res.json())
+      .then(data => {
+        const article = data.find(item => item.id === id);
+        if (article) {
+          document.getElementById("article-detail").innerHTML = `
+            <h2>${article.title}</h2>
+            <img src="${article.image}" alt="Gambar">
+            <p>${article.content}</p>
+          `;
+        } else {
+          document.getElementById("article-detail").innerHTML = "Berita tidak ditemukan.";
+        }
+      });
+  </script>
+</body>
+</html>
